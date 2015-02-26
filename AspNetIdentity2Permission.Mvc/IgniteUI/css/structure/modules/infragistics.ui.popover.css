@@ -1,0 +1,11 @@
+﻿.ui-igpopover{position:absolute;z-index:10000;display:none;white-space:normal;word-wrap:break-word;position:absolute}
+.ui-igpopover>.ui-widget-content{padding:5px;overflow:hidden;font-size:11px;background-color:#E5E5E5;background-image:none;min-width:60px;color:#333;font-weight:normal;border:1px solid #E5E5E5;-moz-box-shadow:0 0 10px grey;-webkit-box-shadow:0 0 10px grey;box-shadow:0 0 10px grey}
+.ui-igpopover-arrow{position:absolute;display:block;width:0;height:0;border-width:11px;z-index:11000;border-style:solid;border-color:transparent}
+.ui-igpopover-arrow-bottom{left:50%;bottom:0;margin-left:-11px;border-bottom-width:0;border-top-color:#E5E5E5}
+.ui-igpopover-arrow-top{left:50%;top:0;margin-left:-11px;border-top-width:0;border-bottom-color:#E5E5E5}
+.ui-igpopover-arrow-right{top:50%;right:0;margin-top:-11px;border-right-width:0;border-left-color:#E5E5E5}
+.ui-igpopover-arrow-left{top:50%;left:0;margin-top:-11px;border-left-width:0;border-right-color:#E5E5E5}
+.ui-igpopover-title{margin-right:15px;font-size:12px;font-weight:normal;line-height:18px;background-color:#f7f7f7;border-bottom:1px solid #ebebeb;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
+.ui-igpopover-close-button{position:absolute;top:5px;right:5px;cursor:pointer}
+.touch .ui-igpopover .ui-widget-content{font-size:1.1em}
+.touch .ui-igpopover .ui-icon-close{width:20px;height:20px}

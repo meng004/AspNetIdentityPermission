@@ -1,0 +1,24 @@
+﻿.ui-igcombo{padding:0!important}
+.ui-igcombo .ui-icon{float:none}
+.ui-igcombo-field,.ui-igcombo .ui-igcombo-field{left:auto!important;top:auto!important;margin:0!important;border:0;outline:0;color:initial;padding:1px 2px 1px 2px}
+.ui-igcombo-field::-ms-clear{display:none}
+.ui-igcombo-nulltext{color:#999}
+.ui-igcombo-button{display:inline-block;cursor:pointer;overflow:hidden}
+.ui-igcombo .ui-igcombo-button-rtl,.ui-widget-content .ui-igcombo-button-rtl,.ui-igcombo-button-rtl{border-width:0 1px 0 0}
+.ui-igcombo .ui-igcombo-button-ltr,.ui-widget-content .ui-igcombo-button-ltr,.ui-igcombo-button-ltr{border-width:0 0 0 1px}
+.ui-igcombo-clear,.ui-widget-content .ui-igcombo-clear,.ui-igcombo .ui-igcombo-clear{display:inline-block;cursor:pointer;background:0;overflow:hidden;border:0}
+.ui-igcombo-list,.ui-igcombo .ui-igcombo-list{z-index:100000;font-size:.95em;background-image:none}
+.ui-igcombo-listitemholder,.ui-igcombo-list .ui-igcombo-listitemholder{margin:0;padding:0;border:0;background:0}
+.ui-igcombo-listitem,.ui-igcombo-list .ui-igcombo-listitem{list-style-type:none;margin:0;overflow:hidden;white-space:nowrap;border:0;background-image:none;float:left;padding:0 .2em;cursor:default;position:relative;outline:0}
+.ui-igcombo-listitem-match{font-weight:bold}
+.ui-igcombo-checkbox{position:absolute;cursor:pointer}
+.ui-igcombo-listitemtextwithcheckbox{display:block;position:relative}
+.ui-igcombo-waitfiltering{opacity:.5;filter:alpha(opacity=50)}
+.ui-igcombo-waitfiltering input{background:#d8d8d8}
+.ui-igcombo-buttonicon,.ui-igcombo-clearicon,.ui-igcombo-checkbox-on{display:block}
+.ui-igcombo-no-top-corners{-moz-border-radius-topleft:0;-moz-border-radius-topright:0;-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;border-top-left-radius:0;border-top-right-radius:0}
+.ui-igcombo-no-bottom-corners{-moz-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-left-radius:0;-webkit-border-bottom-right-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0}
+.touch .ui-iggrid .ui-igcombo-clear,.touch .ui-iggrid .ui-widget-content .ui-igcombo-clear,.touch .ui-iggrid .ui-igcombo .ui-igcombo-clear,.touch .ui-iggrid .ui-igcombo-button,.touch .ui-iggrid .ui-igedit .ui-igedit-button{width:2em}
+.touch .ui-iggrid .ui-igcombo-buttonicon,.touch .ui-iggrid .ui-igcombo-clearicon{left:.5em;position:relative}
+.touch .ui-iggrid .ui-igcombo-list{height:auto!important}
+.touch .ui-iggrid .ui-igcombo-listitem{height:2.4em!important;font-size:1.4em;line-height:2.4em!important}

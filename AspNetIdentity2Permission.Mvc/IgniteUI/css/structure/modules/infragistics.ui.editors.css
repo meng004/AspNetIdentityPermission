@@ -1,0 +1,20 @@
+﻿.ui-igedit,.ui-widget .ui-igedit{background:#fff;font-size:1em;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box}
+.ui-igedit-container{overflow:hidden;padding:0!important}
+.ui-igedit .ui-icon{float:none!important}
+.ui-igedit-field,.ui-widget .ui-igedit-field{outline:0;padding:1px 2px 1px 2px;font-size:1em;background-color:#fff;color:#333;text-shadow:none}
+.ui-igedit-field::-ms-clear{display:none}
+.ui-igedit .ui-igedit-field{border:0 none;float:left!important;margin:0!important}
+.ui-igedit .ui-igedit_rtl{float:right!important}
+.ui-igedit-textarea{resize:none;overflow:auto}
+.ui-igedit-negative,.ui-widget .ui-igedit-negative{color:#e00000}
+.ui-igedit-nullvalue,.ui-widget .ui-igedit-nullvalue{color:#999;text-shadow:none}
+.ui-igedit .ui-igedit-button{float:right!important;border-width:0 0 0 1px!important;display:inline-block;width:16px}
+.ui-igedit .ui-igedit-button-rtl{float:left!important;border-width:0 1px 0 0!important}
+.ui-igedit .ui-igedit-buttonimage,.ui-widget .ui-igedit-buttonimage{border:0!important;background-color:transparent;margin-top:2px;display:block}
+.ui-igedit-buttonclear,.ui-igedit .ui-igedit-buttonclear{background:0;border:0 none!important}
+.ui-igedit-dropdown{z-index:100000}
+.ui-igedit-list{background-image:none}
+.ui-igedit-listitem,.ui-widget .ui-igedit-listitem{font-size:.95em;border-width:0;background-image:none;padding-left:2px;cursor:default}
+.ui-igedit-listitemcolumnborder,.ui-widget .ui-igedit-listitemcolumnborder{border-right-width:1px}
+.ui-igedit-no-top-corners{-moz-border-radius-topleft:0;-moz-border-radius-topright:0;-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;border-top-left-radius:0;border-top-right-radius:0}
+.ui-igedit-no-bottom-corners{-moz-border-radius-bottomleft:0;-moz-border-radius-bottomright:0;-webkit-border-bottom-left-radius:0;-webkit-border-bottom-right-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0}

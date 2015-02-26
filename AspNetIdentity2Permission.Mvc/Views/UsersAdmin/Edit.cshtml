@@ -1,0 +1,53 @@
+﻿@model AspNetIdentity2Permission.Mvc.Models.EditUserViewModel
+@{
+    ViewBag.Title = "编辑用户";
+}
+
+<h2>编辑用户</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <div class=" form-horizontal">
+        <h4>编辑用户</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control",@readonly="readonly" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class=" col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class=" form-group">
+            @Html.Label("角色组", new { @class = "control-label col-md-2" })
+            <span class=" col-md-10">
+                @foreach (var item in Model.RolesList)
+                {
+                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                    @Html.Label(item.Value, new { @class = "control-label" })
+                }
+            </span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="保存" class="btn btn-primary">
+            </div>
+        </div>
+    </div>
+
+}
+<div>
+    @Html.ActionLink("返回用户列表", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

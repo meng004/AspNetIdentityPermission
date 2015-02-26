@@ -1,0 +1,8 @@
+﻿.ui-icon.ui-igrating-vote,.ui-icon.ui-igrating-voteselected,.ui-igrating-votehover,.ui-igrating-votereadonly,.ui-igrating-votereadonlyselected{background-image:url('../images/ig-rating.png');background-color:transparent;-moz-border-radius:0;-webkit-border-radius:0;-o-border-radius:0;border-radius:0;-moz-background-size:131px 63px;-webkit-background-size:131px 63px;-o-background-size:131px 63px;background-size:131px 63px}
+@media only screen and (-webkit-min-device-pixel-ratio :1.5),only screen and (min-device-pixel-ratio :1.5){.ui-icon.ui-igrating-vote,.ui-icon.ui-igrating-voteselected,.ui-igrating-votehover,.ui-igrating-votereadonly,.ui-igrating-votereadonlyselected{background-image:url('../images/ig-rating@2.png')}
+}
+.ui-igrating-vote{background-position:-44px 0;width:44px;height:44px}
+.ui-igrating-voteselected{background-position:0 0}
+.ui-igrating-votehover{background-position:-88px 0}
+.ui-igrating-votereadonly{background-position:-44px -44px;width:20px;height:20px}
+.ui-igrating-votereadonlyselected{background-position:0 -44px}

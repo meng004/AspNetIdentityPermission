@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.PermissionViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm(new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue }))
+{
+    @Html.AntiForgeryToken()
+    <p>
+        @Html.ActionLink("添加", "Create", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue }, new { @class = "btn btn-default" })
+    </p>
+    <div class=" form-group">
+        @Html.Label("角色", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("RoleID")
+            <input type="submit" value="确定" class="btn btn-default"  />
+        </div>
+    </div>
+}
+
+<table class="table table-hover">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Action)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Controller)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.HiddenFor(modelItem => item.Id, new { @id = "permissionId" })</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Action)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Controller)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("详情", "Details", new { roleId = item.RoleID, permissionId = item.Id }) |
+                @Html.ActionLink("删除", "Delete", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue, permissionId = item.Id })
+            </td>
+        </tr>
+    }
+
+
+</table>
+

@@ -1,0 +1,101 @@
+﻿@using Infragistics.Web.Mvc
+@model IQueryable<AspNetIdentity2Permission.Mvc.Models.PermissionViewModel>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div class="form-horizontal">
+
+    <div class="col-md-10">
+        @Html.DropDownList("RoleID", ViewBag.RoleID as SelectList, new { @disabled = "disabled" })
+        <input type="button" value="保存" onclick="getRowsInfo();" class="btn btn-default" />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @(Html.Infragistics()
+                    .Grid(Model)
+                    .ID("Grid")
+                    .Height("450px")
+                    .Width("100%")
+                    .AutoGenerateColumns(false)
+                    .AutoGenerateLayouts(false)
+                    .RenderCheckboxes(true)
+                    .PrimaryKey("Id")
+                    .Columns(column =>
+                    {
+                        column.For(x => x.Id).Hidden(true);
+                        column.For(x => x.Action).HeaderText("Action名称");
+                        column.For(x => x.Controller).HeaderText("Controller名称");
+                        column.For(x => x.Description).HeaderText("功能说明");
+                    })
+                    .Features(feature =>
+                    {
+                        feature.Selection().Mode(SelectionMode.Row).MultipleSelection(true);
+                        feature.RowSelectors().EnableRowNumbering(true).EnableCheckBoxes(true);
+                        feature.Sorting();
+                        feature.Paging().PageSize(10)
+                                .FirstPageLabelText("第一页")
+                                .LastPageLabelText("最后一页")
+                                .NextPageLabelText("下一页")
+                                .PageSizeDropDownLabel("每页记录数")
+                                .PrevPageLabelText("前一页");
+                    })
+                    //.DataSourceUrl(Url.Action("GetPermissions"))
+                    .DataBind()
+                    .Render()
+            )
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue })
+</div>
+
+<script>
+    function getRowsInfo() {
+        var selectedRows = $("#Grid").igGridSelection("selectedRows"), data = [], cellVal;
+        if (selectedRows.length == 0) {
+            alert("请选择记录");
+            return false;
+        }
+        //取roleID
+        var roleId = $("#RoleID").val();
+        //取token
+        var token = $("input[name='__RequestVerificationToken']").val();
+        //取列数据
+        gridColumns = $("#Grid").igGrid("option", "columns");
+        for (j = 0; j < selectedRows.length; j++) {
+            var row = selectedRows[j];
+            var rowData = {};
+            //取单元格
+            for (i = 0; i < gridColumns.length; i++) {
+                cellVal = $("#Grid").igGrid("getCellValue", row.id, gridColumns[i].key);
+                rowData[gridColumns[i].key] = cellVal;
+            }
+            data[j] = rowData;
+        }
+        //提交服务端保存
+        $.post("/RolePermissions/Create",
+            {
+                "__RequestVerificationToken": token,
+                "roleId": roleId,
+                "data": data
+            },
+            function (result) {
+                if (result.Success) {
+                    //跳转到Index
+                    window.location = "/RolePermissions/Index?roleId=" + roleId;
+                }
+                else {
+                    //刷新当前
+                    location.reload();
+                }
+            });
+    }
+</script>

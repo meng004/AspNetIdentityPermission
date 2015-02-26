@@ -1,0 +1,9 @@
+﻿.ui-igrating .ui-icon{float:none!important}
+.touch .ui-igrating .ui-icon.ui-igrating-vote,.touch .ui-igrating .ui-icon.ui-igrating-voteselected,.touch .ui-igrating .ui-icon.ui-igrating-votehover,.touch .ui-igrating .ui-icon.ui-igrating-votedisabled,.touch .ui-igrating .ui-icon.ui-igrating-votedisabledselected{background-image:url(../images/igRating/ig-rating-touch.png);width:44px;height:44px;-moz-background-size:250px 44px;-webkit-background-size:250px 44px;-o-background-size:250px 44px;background-size:250px 44px}
+.touch .ui-icon.ui-igrating-vote{background-position:-150px 0}
+.touch .ui-icon.ui-igrating-voteselected{background-position:0 0}
+.touch .ui-icon.ui-igrating-votehover{background-position:-50px 0}
+.touch .ui-icon.ui-igrating-votedisabled{background-position:-200px 0}
+.touch .ui-icon.ui-igrating-votedisabledselected{background-position:-100px 0}
+@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min--moz-device-pixel-ratio:2){.touch .ui-igrating .ui-icon.ui-igrating-vote,.touch .ui-igrating .ui-icon.ui-igrating-voteselected,.touch .ui-igrating .ui-icon.ui-igrating-votehover,.touch .ui-igrating .ui-icon.ui-igrating-votedisabled,.touch .ui-igrating .ui-icon.ui-igrating-votedisabledselected{background-image:url(../images/igRating/ig-rating-touchx2.png)}
+}

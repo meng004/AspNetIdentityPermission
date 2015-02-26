@@ -1,0 +1,29 @@
+﻿@model AspNetIdentity2Permission.Mvc.Models.ApplicationUser
+@{
+    ViewBag.Title = "删除用户";
+}
+
+<h2>删除用户</h2>
+<h3>您确认要删除这个用户吗？？</h3>
+<div>
+    <h4>用户</h4>
+    <hr />
+    <dl class=" dl-horizontal ">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="删除用户" class=" btn btn-danger" /> |
+            @Html.ActionLink("返回用户列表", "Index")
+        </div>
+    }
+</div>

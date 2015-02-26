@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.ApplicationUser>
+@{
+    ViewBag.Title = "用户列表";
+}
+
+<h2>用户列表</h2>
+
+
+<p>
+    @Html.ActionLink("新建用户", "Create")
+</p>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+        
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("编辑用户", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("用户详情", "Details", new { id = item.Id })|
+                @Html.ActionLink("删除用户", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

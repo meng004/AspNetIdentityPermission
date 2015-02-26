@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.ApplicationRole>
+@{
+    ViewBag.Title = "角色列表";
+}
+
+<h2>角色列表</h2>
+
+<p>
+    @Html.ActionLink("新建角色", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("角色名称")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("编辑角色", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("角色详情", "Details", new { id = item.Id }) |
+                @Html.ActionLink("删除角色", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
