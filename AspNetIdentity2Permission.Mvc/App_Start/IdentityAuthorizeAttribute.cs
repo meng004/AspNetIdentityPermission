@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel;
 
 
 namespace AspNetIdentity2Permission.Mvc
@@ -12,6 +13,7 @@ namespace AspNetIdentity2Permission.Mvc
     /// <summary>
     /// 访问授权验证
     /// </summary>
+    [Description("验证访问权限")]
     public class IdentityAuthorizeAttribute : AuthorizeAttribute
     {
         /// <summary>
