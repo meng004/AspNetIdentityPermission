@@ -1,4 +1,6 @@
-﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.PermissionViewModel>
+﻿@using Webdiyer.WebControls.Mvc
+
+@model IPagedList<AspNetIdentity2Permission.Mvc.Models.PermissionViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -21,22 +23,23 @@
 
 }
 
-<table class="table table-hover table-striped">
-    <tr>
-        <th></th>
-        <th>
-            @Html.DisplayNameFor(model => model.Action)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Controller)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
+<div id="views">
+    <table class="table table-hover table-striped">
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Controller)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
 
-    @foreach (var item in Model)
+        @foreach (var item in Model)
     {
     <tr>
         <td>@Html.HiddenFor(modelItem => item.Id, new { @id = "permissionId" })</td>
@@ -57,5 +60,8 @@
     }
 
 
-</table>
+    </table>
+    @Ajax.Pager(Model, new PagerOptions { PageIndexParameterName = "index" }, new MvcAjaxOptions { UpdateTargetId = "views", EnablePartialLoading = true })
 
+</div>
+@section Scripts{@{Html.RegisterMvcPagerScriptResource();}}
