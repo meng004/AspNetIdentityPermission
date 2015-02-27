@@ -17,17 +17,12 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         [Description("权限列表")]
         public async Task<ActionResult> Index()
         {
-            //var roleViews = await GetRoleViews();
-            //ViewBag.RoleID = new SelectList(roleViews, "ID", "Name", roleViews.FirstOrDefault().Id);
             var permissions = await _db.Permissions.ToListAsync();
             //创建ViewModel
             var permissionViews = new List<PermissionViewModel>();
-
-            var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
             permissions.Each(t =>
             {
                 var view = Mapper.Map<PermissionViewModel>(t);
-
                 permissionViews.Add(view);
             });
             //排序
@@ -48,13 +43,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new PermissionViewModel
-            {
-                Id = applicationPermission.Id,
-                Controller = applicationPermission.Controller,
-                Action = applicationPermission.Action,
-                Description = applicationPermission.Description
-            };
+            var view = Mapper.Map<PermissionViewModel>(applicationPermission);
             return View(view);
         }
 
@@ -71,16 +60,13 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             var dbPermissions = _db.Permissions.ToList();
             //取两者差集
             var permissions = allPermissions.Except(dbPermissions, new ApplicationPermissionEqualityComparer());
-            var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
             permissions.Each(t =>
             {
                 var view = Mapper.Map<PermissionViewModel>(t);
-
                 permissionViews.Add(view);
             });
             //排序
             permissionViews.Sort(new PermissionViewModelComparer());
-
             return View(permissionViews.AsQueryable());
         }
 
@@ -96,18 +82,11 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             foreach (var item in data)
             {
                 //创建权限
-                var permission = new ApplicationPermission
-                {
-                    Id = item.Id,
-                    Action = item.Action,
-                    Controller = item.Controller,
-                    Description = item.Description
-                };
+                var permission = Mapper.Map<ApplicationPermission>(item);
                 _db.Permissions.Add(permission);
             }
             //保存
             await _db.SaveChangesAsync();
-
             //方法2，使用Newtonsoft.Json序列化结果对象
             //格式为json字符串，客户端需要解析，即反序列化
             var result = JsonConvert.SerializeObject(new { Success = true });
@@ -127,13 +106,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new PermissionViewModel
-            {
-                Id = applicationPermission.Id,
-                Action = applicationPermission.Action,
-                Controller = applicationPermission.Controller,
-                Description = applicationPermission.Description
-            };
+            var view = Mapper.Map<PermissionViewModel>(applicationPermission);
             return View(view);
         }
 
@@ -147,13 +120,9 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var model = new ApplicationPermission
-                {
-                    Id = view.Id,
-                    Action = view.Action,
-                    Controller = view.Controller,
-                    Description = view.Description
-                };
+                //对象映射
+                var model = Mapper.Map<ApplicationPermission>(view);
+                //修改实体状态
                 _db.Entry(model).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -174,13 +143,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new PermissionViewModel
-            {
-                Id = applicationPermission.Id,
-                Action = applicationPermission.Action,
-                Controller = applicationPermission.Controller,
-                Description = applicationPermission.Description
-            };
+            var view = Mapper.Map<PermissionViewModel>(applicationPermission);
             return View(view);
         }
 
