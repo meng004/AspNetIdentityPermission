@@ -57,7 +57,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
         [Display(Name = "选择")]
         public bool Selected { get; set; }
         [Display(Name = "角色ID")]
-        public string RoleID { get; set; }
+        public string RoleId { get; set; }
         [Display(Name="角色名")]
         public string RoleName { get; set; }
     }
