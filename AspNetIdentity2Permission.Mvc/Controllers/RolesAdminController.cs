@@ -12,22 +12,22 @@ using Webdiyer.WebControls.Mvc;
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
 
-public class RolesAdminController : BaseController
-{
-
-    // GET: RolesAdmin
-    [Description("角色列表")]
-    public ActionResult Index(int index = 1)
+    public class RolesAdminController : BaseController
     {
-        var roles = _roleManager.Roles;
-        var views = new List<RoleViewModel>();
-        foreach (var role in roles)
+
+        // GET: RolesAdmin
+        [Description("角色列表")]
+        public ActionResult Index(int index = 1)
         {
-            var view = Mapper.Map<RoleViewModel>(role);
-            views.Add(view);
+            var roles = _roleManager.Roles;
+            var views = new List<RoleViewModel>();
+            foreach (var role in roles)
+            {
+                var view = Mapper.Map<RoleViewModel>(role);
+                views.Add(view);
+            }
+            return View(views.ToPagedList(index, 10));//显示角色清单
         }
-        return View(views.ToPagedList(index, 10));//显示角色清单
-    }
 
         //异步读取角色详情
         // GET: /Roles/Details/5
