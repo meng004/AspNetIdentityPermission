@@ -73,11 +73,9 @@
         for (j = 0; j < selectedRows.length; j++) {
             var row = selectedRows[j];
             var rowData = {};
-            //取单元格
-            for (i = 0; i < gridColumns.length; i++) {
-                cellVal = $("#Grid").igGrid("getCellValue", row.id, gridColumns[i].key);
-                rowData[gridColumns[i].key] = cellVal;
-            }
+            //取ID值
+            cellVal = $("#Grid").igGrid("getCellValue", row.id, "Id");
+            rowData["Id"] = cellVal;
             data[j] = rowData;
         }
         //提交服务端保存
