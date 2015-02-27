@@ -1,4 +1,5 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
+using AutoMapper;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,12 +22,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             var views = new List<RoleViewModel>();
             foreach (var role in roles)
             {
-                var view = new RoleViewModel
-                {
-                    Id = role.Id,
-                    Name = role.Name,
-                    Description = role.Description
-                };
+                var view = Mapper.Map<RoleViewModel>(role);
                 views.Add(view);
             }
             return View(views);//显示角色清单
@@ -53,12 +49,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             ViewBag.Users = users;
             ViewBag.UserCount = users.Count();
-            var view = new RoleViewModel
-            {
-                Id = role.Id,
-                Name = role.Name,
-                Description = role.Description
-            };
+            var view = Mapper.Map<RoleViewModel>(role);
             return View(view);
         }
 
@@ -80,10 +71,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = new ApplicationRole(roleViewModel.Name)
-                    {
-                        Description = roleViewModel.Description
-                    };
+                var role = Mapper.Map<ApplicationRole>(roleViewModel);
                 var roleresult = await _roleManager.CreateAsync(role);
                 if (!roleresult.Succeeded)
                 {
@@ -110,12 +98,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new RoleViewModel
-            {
-                Id = role.Id,
-                Name = role.Name,
-                Description = role.Description
-            };
+            var view = Mapper.Map<RoleViewModel>(role);
             return View(view);
         }
 
@@ -152,12 +135,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new RoleViewModel
-            {
-                Id = role.Id,
-                Name = role.Name,
-                Description = role.Description
-            };
+            var view = Mapper.Map<RoleViewModel>(role);
             return View(view);
         }
 
