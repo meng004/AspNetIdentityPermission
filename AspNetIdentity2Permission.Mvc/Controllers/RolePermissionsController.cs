@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Webdiyer.WebControls.Mvc;
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
@@ -15,7 +16,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
     {
         // GET: RolePermissions
         [Description("角色-权限列表")]
-        public ActionResult Index(string roleId)
+        public ActionResult Index(string roleId, int index = 1)
         {
             //取role列表
             var roles = _roleManager.Roles.ToList();
@@ -41,7 +42,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             });
             //排序
             permissionViews.Sort(new PermissionViewModelComparer());
-            return View(permissionViews);
+            return View(permissionViews.ToPagedList(index, 10));
         }
 
         // GET: RolePermissions/Details/5
