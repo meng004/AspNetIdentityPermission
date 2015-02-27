@@ -1,4 +1,5 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
+using AutoMapper;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
@@ -21,12 +22,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             var views = new List<EditUserViewModel>();
             foreach (var user in users)
             {
-                var view = new EditUserViewModel
-                {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email
-                };
+                var view = Mapper.Map<EditUserViewModel>(user);
                 views.Add(view);
             }
             return View(views);
@@ -45,12 +41,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             //按Id查找用户
             var user = await _userManager.FindByIdAsync(id);
-            var view = new EditUserViewModel
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email
-            }; 
+            var view = Mapper.Map<EditUserViewModel>(user);
             ViewBag.RoleNames = await _userManager.GetRolesAsync(user.Id);
 
             return View(view);
@@ -76,12 +67,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
-                {
-                    UserName = userViewModel.Username,
-                    Password = userViewModel.Password,
-                    Email = userViewModel.Email
-                };
+                var user = Mapper.Map<ApplicationUser>(userViewModel);
                 var adminResult = await _userManager.CreateAsync(user, userViewModel.Password);
 
                 //
@@ -126,18 +112,14 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 return HttpNotFound();
             }
             var userRoles = await _userManager.GetRolesAsync(user.Id);
-            return View(new EditUserViewModel()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
+            var view = Mapper.Map<EditUserViewModel>(user);
+            view.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
                     Value = x.Name
-                })
-            });
+                });
+            return View(view);
         }
         //
         //写入用户编辑
@@ -153,7 +135,8 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 if (user == null)
                 {
                     return HttpNotFound();
-                }                
+                }
+                //不允许修改用户名
                 user.Email = editUser.Email;
                 //更新用户信息
                 var result = await _userManager.UpdateAsync(user);
@@ -192,12 +175,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new EditUserViewModel
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email
-            };
+            var view = Mapper.Map<EditUserViewModel>(user);
             return View(view);
         }
         //
