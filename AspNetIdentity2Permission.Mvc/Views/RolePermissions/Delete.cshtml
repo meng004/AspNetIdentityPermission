@@ -12,6 +12,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Controller)
         </dt>
 
@@ -41,7 +48,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index", new { roleId = Model.RoleID })
+            @Html.ActionLink("返回角色权限列表", "Index", new { roleId = Model.RoleID })
         </div>
     }
 </div>
