@@ -1,6 +1,7 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
 using AutoMapper;
 using Infragistics.Web.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
@@ -8,14 +9,14 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using Webdiyer.WebControls.Mvc;
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
     public class PermissionsAdminController : BaseController
     {
         [Description("权限列表")]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int index = 1)
         {
             var permissions = await _db.Permissions.ToListAsync();
             //创建ViewModel
@@ -27,7 +28,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             });
             //排序
             permissionViews.Sort(new PermissionViewModelComparer());
-            return View(permissionViews);
+            return View(permissionViews.ToPagedList(index, 10));
         }
 
         // GET: PermissionsAdmin/Details/5
