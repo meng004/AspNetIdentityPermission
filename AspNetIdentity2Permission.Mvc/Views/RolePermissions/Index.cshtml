@@ -10,18 +10,18 @@
 {
     @Html.AntiForgeryToken()
     <p>
-        @Html.ActionLink("添加", "Create", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue }, new { @class = "btn btn-default" })
+        @Html.ActionLink("添加", "Create", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue })
     </p>
     <div class=" form-group">
         @Html.Label("角色", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownList("RoleID")
-            <input type="submit" value="确定" class="btn btn-default"  />
+            <input type="submit" value="确定" class="btn btn-default" />
         </div>
     </div>
 }
 
-<table class="table table-hover">
+<table class="table table-hover table-striped">
     <tr>
         <th></th>
         <th>
