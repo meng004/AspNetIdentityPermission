@@ -1,7 +1,7 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
 using System.ComponentModel;
 
-namespace AspNetIdentity2Permission.Mvc.App_Start
+namespace AspNetIdentity2Permission.Mvc
 {
     [Description("AutoMapper配置")]
     public class AutoMapperProfile : AutoMapper.Profile
