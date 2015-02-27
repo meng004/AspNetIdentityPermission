@@ -32,11 +32,11 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             //创建ViewModel
             var permissionViews = new List<PermissionViewModel>();
 
-            var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
+            //var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
             permissions.Each(t =>
             {
                 var view = Mapper.Map<PermissionViewModel>(t);
-                view.RoleID = roleId;
+                view.RoleId = roleId;
                 permissionViews.Add(view);
             });
             //排序
@@ -60,15 +60,9 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new PermissionViewModel
-            {
-                Id = applicationPermission.Id,
-                Action = applicationPermission.Action,
-                Controller = applicationPermission.Controller,
-                Description = applicationPermission.Description,
-                RoleID = roleId,
-                RoleName = role.Name
-            };
+            var view = Mapper.Map<PermissionViewModel>(applicationPermission);
+            view.RoleId = roleId;
+            view.RoleName = role.Name;
 
             return View(view);
         }
@@ -92,8 +86,6 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             var permissions = allPermission.Except(rolePermissions, new ApplicationPermissionEqualityComparer());
             //创建ViewModel
             var permissionViews = new List<PermissionViewModel>();
-
-            var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
             permissions.Each(t =>
             {
                 var view = Mapper.Map<PermissionViewModel>(t);
@@ -109,9 +101,9 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         [Description("新建角色-权限，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(string roleId, IEnumerable<PermissionViewModel> data)
+        public async Task<ActionResult> Create(string roleId, IEnumerable<ApplicationPermission> data)
         {
-            if (string.IsNullOrWhiteSpace(roleId))
+            if (string.IsNullOrWhiteSpace(roleId) || data.Count() == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -128,8 +120,6 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             //保存;
             var records = await _db.SaveChangesAsync();
-
-            //return RedirectToAction("Index", new { roleId = roleId });
             //方法1，用JsonResult类封装，格式为Json，客户端直接使用
             var response = new Dictionary<string, bool>();
             response.Add("Success", true);
@@ -150,15 +140,10 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = new PermissionViewModel
-            {
-                Id = applicationPermission.Id,
-                Action = applicationPermission.Action,
-                Controller = applicationPermission.Controller,
-                Description = applicationPermission.Description,
-                RoleID = roleId,
-                RoleName = role.Name
-            };
+            //创建viewModel
+            var view = Mapper.Map<PermissionViewModel>(applicationPermission);
+            view.RoleId = roleId;
+            view.RoleName = role.Name;
 
             return View(view);
         }
