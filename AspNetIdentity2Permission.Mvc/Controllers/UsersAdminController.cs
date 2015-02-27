@@ -26,7 +26,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 var view = Mapper.Map<EditUserViewModel>(user);
                 views.Add(view);
             }
-            return View(views.ToPagedList(index, 2));
+            return View(views.ToPagedList(index, 10));
         }
 
         //

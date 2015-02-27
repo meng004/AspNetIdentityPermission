@@ -6,17 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Webdiyer.WebControls.Mvc;
 
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
-  
+
     public class RolesAdminController : BaseController
     {
 
         // GET: RolesAdmin
         [Description("角色列表")]
-        public ActionResult Index()
+        public ActionResult Index(int index = 1)
         {
             var roles = _roleManager.Roles;
             var views = new List<RoleViewModel>();
@@ -25,7 +26,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 var view = Mapper.Map<RoleViewModel>(role);
                 views.Add(view);
             }
-            return View(views);//显示角色清单
+            return View(views.ToPagedList(index, 10));//显示角色清单
         }
 
         //异步读取角色详情
@@ -157,7 +158,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 {
                     return HttpNotFound();
                 }
-                var result = await _roleManager.DeleteAsync(role);  
+                var result = await _roleManager.DeleteAsync(role);
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
