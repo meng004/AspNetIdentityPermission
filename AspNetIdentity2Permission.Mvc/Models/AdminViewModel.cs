@@ -58,6 +58,8 @@ namespace AspNetIdentity2Permission.Mvc.Models
         public bool Selected { get; set; }
         [Display(Name = "角色ID")]
         public string RoleID { get; set; }
+        [Display(Name="角色名")]
+        public string RoleName { get; set; }
     }
 
     public class PermissionViewModelComparer : IComparer<PermissionViewModel>
