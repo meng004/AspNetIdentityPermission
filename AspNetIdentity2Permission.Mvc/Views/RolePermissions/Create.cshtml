@@ -1,4 +1,7 @@
 ﻿@using Infragistics.Web.Mvc
+
+@Styles.Render("~/IgniteUI/css")
+
 @model IQueryable<AspNetIdentity2Permission.Mvc.Models.PermissionViewModel>
 
 @{
@@ -8,7 +11,7 @@
 <h2>Create</h2>
 
 <div class="form-horizontal">
-
+    @Html.Label("角色", new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
         @Html.DropDownList("RoleID", ViewBag.RoleID as SelectList, new { @disabled = "disabled" })
         <input type="button" value="保存" onclick="getRowsInfo();" class="btn btn-default" />
@@ -54,7 +57,7 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue })
+    @Html.ActionLink("返回角色权限列表", "Index", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue })
 </div>
 
 <script>
@@ -97,3 +100,6 @@
         });
     }
 </script>
+
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/IgniteUI/js")
