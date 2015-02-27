@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Webdiyer.WebControls.Mvc;
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
@@ -16,7 +17,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
 
         // GET: UsersAdmin
         [Description("用户列表")]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int index = 1)
         {
             var users = await _userManager.Users.ToListAsync();
             var views = new List<EditUserViewModel>();
@@ -25,7 +26,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 var view = Mapper.Map<EditUserViewModel>(user);
                 views.Add(view);
             }
-            return View(views);
+            return View(views.ToPagedList(index, 2));
         }
 
         //
