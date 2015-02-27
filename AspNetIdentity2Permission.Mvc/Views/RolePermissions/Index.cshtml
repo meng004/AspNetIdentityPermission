@@ -50,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("详情", "Details", new { roleId = item.RoleID, permissionId = item.Id }) |
+                @Html.ActionLink("详情", "Details", new { roleId = item.RoleId, permissionId = item.Id }) |
                 @Html.ActionLink("删除", "Delete", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue, permissionId = item.Id })
             </td>
         </tr>
