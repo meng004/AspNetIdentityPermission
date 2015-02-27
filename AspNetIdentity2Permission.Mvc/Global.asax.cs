@@ -17,7 +17,7 @@ namespace AspNetIdentity2Permission.Mvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //AutoMapper配置
-            AspNetIdentity2Permission.Mvc.App_Start.AutoMapperConfig.Configure();
+            AutoMapperConfig.Configure();
         }
     }
 }
