@@ -13,12 +13,12 @@ namespace AspNetIdentity2Permission.Mvc
             CreateMap<ApplicationRole, RoleViewModel>();
             CreateMap<RoleViewModel, ApplicationRole>()
                 .ForMember(
-                            dest => dest.Id, 
+                            dest => dest.Id,
                             sour =>
                             {
                                 sour.MapFrom(s => s.Id ?? System.Guid.NewGuid().ToString());
                             });
-            
+
             CreateMap<ApplicationUser, EditUserViewModel>();
             CreateMap<EditUserViewModel, ApplicationUser>();
             CreateMap<RegisterViewModel, ApplicationUser>();
