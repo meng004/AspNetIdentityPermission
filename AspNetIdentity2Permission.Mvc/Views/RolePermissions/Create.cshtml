@@ -87,15 +87,15 @@
                 "roleId": roleId,
                 "data": data
             },
-            function (result) {
-                if (result.Success) {
-                    //跳转到Index
-                    window.location = "/RolePermissions/Index?roleId=" + roleId;
-                }
-                else {
-                    //刷新当前
-                    location.reload();
-                }
-            });
+        function (result) {
+            if (result.Success) {
+                //跳转到Index
+                window.location = "/RolePermissions/Index?roleId=" + roleId;
+            }
+            else {
+                //刷新当前
+                location.reload();
+            }
+        });
     }
 </script>

@@ -9,12 +9,12 @@
 
 <h2>Create</h2>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="button" value="保存" onclick="getRowsInfo();" class="btn btn-default" />
-        </div>
+<div class="form-group">
+    <div class="col-md-10">
+        <input type="button" value="保存" onclick="getRowsInfo();" class="btn btn-default" />
     </div>
-    
+</div>
+
 
 <div class="form-group">
     <div class="col-md-10">
@@ -46,7 +46,7 @@
                                 .PageSizeDropDownLabel("每页记录数")
                                 .PrevPageLabelText("前一页");
                     })
-                        //.DataSourceUrl(Url.Action("GetPermissions"))
+                //.DataSourceUrl(Url.Action("GetPermissions"))
                     .DataBind()
                     .Render()
         )
@@ -76,7 +76,7 @@
             //取单元格数据
             for (i = 0; i < gridColumns.length; i++) {
                 cellVal = $("#Grid").igGrid("getCellValue", row.id, gridColumns[i].key);
-                rowData[gridColumns[i].key] = cellVal; 
+                rowData[gridColumns[i].key] = cellVal;
             }
             data[j] = rowData;
         }
@@ -87,7 +87,9 @@
                 "__RequestVerificationToken": token,
                 "data": data
             },
-            function (result) {
+            function (jsonStr) {
+                //数据为Json字符串，需要解析
+                var result = eval("(" + jsonStr + ")");
                 if (result.Success) {
                     //跳转到Index
                     window.location = "/PermissionsAdmin/Index";

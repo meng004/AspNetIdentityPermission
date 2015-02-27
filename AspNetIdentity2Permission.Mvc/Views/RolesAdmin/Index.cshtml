@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.ApplicationRole>
+﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.RoleViewModel>
 @{
     ViewBag.Title = "角色列表";
 }
@@ -8,7 +8,7 @@
 <p>
     @Html.ActionLink("新建角色", "Create")
 </p>
-<table class="table">
+<table class="table table-hover table-striped">
     <tr>
         <th>
             @Html.Label("角色名称")

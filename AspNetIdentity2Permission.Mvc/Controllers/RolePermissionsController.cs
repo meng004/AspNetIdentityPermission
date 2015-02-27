@@ -2,6 +2,7 @@
 using AutoMapper;
 using Infragistics.Web.Mvc;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
     public class RolePermissionsController : BaseController
     {
         // GET: RolePermissions
+        [Description("角色-权限列表")]
         public ActionResult Index(string roleId)
         {
             //取role列表
@@ -24,7 +26,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 roleId = roles.FirstOrDefault().Id;
             }
             //放入viewbag，设置默认值
-            ViewBag.RoleID = new SelectList(roles, "ID", "Description", roleId);
+            ViewBag.RoleID = new SelectList(roles, "ID", "Name", roleId);
             //取角色权限列表
             var permissions = _roleManager.GetRolePermissions(roleId);
             //创建ViewModel
@@ -43,6 +45,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         }
 
         // GET: RolePermissions/Details/5
+        [Description("角色-权限详情")]
         public ActionResult Details(string roleId, string permissionId)
         {
             if (string.IsNullOrWhiteSpace(roleId) || string.IsNullOrWhiteSpace(permissionId))
@@ -67,22 +70,22 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         }
 
         // POST: RolePermissions/Create
-
+        [Description("新建角色-权限,列表")]
         [GridDataSourceAction]
-        public  ActionResult Create(string roleId)
+        public ActionResult Create(string roleId)
         {
             if (string.IsNullOrWhiteSpace(roleId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var roles = _roleManager.Roles.ToList();
-            ViewBag.RoleID = new SelectList(roles, "ID", "Description", roleId);
+            ViewBag.RoleID = new SelectList(roles, "ID", "Name", roleId);
 
             //取角色权限ID
             var rolePermissions = _roleManager.GetRolePermissions(roleId);
             //取全部权限与角色权限的差集
             var allPermission = _db.Permissions.ToList();
-            var permissions = allPermission.Except(rolePermissions);
+            var permissions = allPermission.Except(rolePermissions, new ApplicationPermissionEqualityComparer());
             //创建ViewModel
             var permissionViews = new List<PermissionViewModel>();
 
@@ -99,6 +102,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         }
 
         // POST: RolePermissions/Edit/5
+        [Description("新建角色-权限，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(string roleId, IEnumerable<PermissionViewModel> data)
@@ -122,15 +126,14 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             var records = await _db.SaveChangesAsync();
 
             //return RedirectToAction("Index", new { roleId = roleId });
-            //返回消息
-            JsonResult result = new JsonResult();
-            Dictionary<string, bool> response = new Dictionary<string, bool>();
+            //方法1，用JsonResult类封装，格式为Json，客户端直接使用
+            var response = new Dictionary<string, bool>();
             response.Add("Success", true);
-            result.Data = response;
-            return result;
+            return new JsonResult { Data = response };
         }
 
         // GET: RolePermissions/Delete/5
+        [Description("删除角色-权限")]
         public ActionResult Delete(string roleId, string permissionId)
         {
             if (string.IsNullOrWhiteSpace(roleId) || string.IsNullOrWhiteSpace(permissionId))
@@ -155,6 +158,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         }
 
         // POST: RolePermissions/Delete/5
+        [Description("删除角色-权限，保存")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string roleId, string permissionId)

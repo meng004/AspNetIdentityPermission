@@ -2,17 +2,19 @@
 using AutoMapper;
 using Infragistics.Web.Mvc;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using Newtonsoft.Json;
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
     public class PermissionsAdminController : BaseController
     {
+        [Description("权限列表")]
         public async Task<ActionResult> Index()
         {
             //var roleViews = await GetRoleViews();
@@ -34,6 +36,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         }
 
         // GET: PermissionsAdmin/Details/5
+        [Description("权限详情")]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -45,17 +48,29 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(applicationPermission);
+            var view = new PermissionViewModel
+            {
+                Id = applicationPermission.Id,
+                Controller = applicationPermission.Controller,
+                Action = applicationPermission.Action,
+                Description = applicationPermission.Description
+            };
+            return View(view);
         }
 
         // GET: PermissionsAdmin/Create
+        [Description("新建权限，列表")]
         [GridDataSourceAction]
         public ActionResult Create()
         {
             //创建ViewModel
             var permissionViews = new List<PermissionViewModel>();
-            //取Permission
-            var permissions = _permissionsOfAssembly;
+            //取程序集中权限
+            var allPermissions = _permissionsOfAssembly;
+            //取数据库已有权限
+            var dbPermissions = _db.Permissions.ToList();
+            //取两者差集
+            var permissions = allPermissions.Except(dbPermissions, new ApplicationPermissionEqualityComparer());
             var map = Mapper.CreateMap<ApplicationPermission, PermissionViewModel>();
             permissions.Each(t =>
             {
@@ -69,6 +84,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             return View(permissionViews.AsQueryable());
         }
 
+        [Description("新建权限，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IEnumerable<PermissionViewModel> data)
@@ -91,15 +107,15 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             //保存
             await _db.SaveChangesAsync();
-            //返回消息
-            JsonResult result = new JsonResult();
-            Dictionary<string, bool> response = new Dictionary<string, bool>();
-            response.Add("Success", true);
-            result.Data = response;
-            return result;
+
+            //方法2，使用Newtonsoft.Json序列化结果对象
+            //格式为json字符串，客户端需要解析，即反序列化
+            var result = JsonConvert.SerializeObject(new { Success = true });
+            return new JsonResult { Data = result };
         }
 
         // GET: PermissionsAdmin/Edit/5
+        [Description("编辑权限")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -111,26 +127,42 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(applicationPermission);
+            var view = new PermissionViewModel
+            {
+                Id = applicationPermission.Id,
+                Action = applicationPermission.Action,
+                Controller = applicationPermission.Controller,
+                Description = applicationPermission.Description
+            };
+            return View(view);
         }
 
         // POST: PermissionsAdmin/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
+        [Description("编辑权限，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Controller,Action,Params,Description")] ApplicationPermission applicationPermission)
+        public ActionResult Edit([Bind(Include = "Id,Controller,Action,Description")] PermissionViewModel view)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(applicationPermission).State = EntityState.Modified;
+                var model = new ApplicationPermission
+                {
+                    Id = view.Id,
+                    Action = view.Action,
+                    Controller = view.Controller,
+                    Description = view.Description
+                };
+                _db.Entry(model).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(applicationPermission);
+            return View(view);
         }
 
         // GET: PermissionsAdmin/Delete/5
+        [Description("删除权限")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -142,10 +174,18 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(applicationPermission);
+            var view = new PermissionViewModel
+            {
+                Id = applicationPermission.Id,
+                Action = applicationPermission.Action,
+                Controller = applicationPermission.Controller,
+                Description = applicationPermission.Description
+            };
+            return View(view);
         }
 
         // POST: PermissionsAdmin/Delete/5
+        [Description("删除权限，保存")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

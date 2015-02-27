@@ -35,24 +35,14 @@ namespace AspNetIdentity2Permission.Mvc
         /// <returns>权限ID列表的IQueryable</returns>
         public IEnumerable<ApplicationPermission> GetRolePermissions(string roleId)
         {
-            //构建缓存key
-            //var key = string.Format("RolePermissions_{0}", roleId);
-            //从缓存中取权限
-            //var permissions = HttpContext.Current.Application.Get(key) as IEnumerable<ApplicationPermission>;
-            //若没有，则从db中取并写入缓存
-            //if (permissions == null)
-            //{
-                //取数据上下文
-                var context = HttpContext.Current.GetOwinContext().Get<ApplicationDbContext>();
-                //取角色
-                var role = context.Roles.Include(r => r.Permissions).FirstOrDefault(t => t.Id == roleId);
-                //取权限ID列表        
-                var rolePermissionIds = role.Permissions.Select(t => t.PermissionId);
-                //取权限列表
-                var permissions = context.Permissions.Where(p => rolePermissionIds.Contains(p.Id)).ToList();
-                //写入缓存
-                //HttpContext.Current.Application.Add(key, permissions);
-            //}
+            //取数据上下文
+            var context = HttpContext.Current.GetOwinContext().Get<ApplicationDbContext>();
+            //取角色
+            var role = context.Roles.Include(r => r.Permissions).FirstOrDefault(t => t.Id == roleId);
+            //取权限ID列表        
+            var rolePermissionIds = role.Permissions.Select(t => t.PermissionId);
+            //取权限列表
+            var permissions = context.Permissions.Where(p => rolePermissionIds.Contains(p.Id)).ToList();
             return permissions;
         }
 
@@ -63,20 +53,22 @@ namespace AspNetIdentity2Permission.Mvc
         /// <returns></returns>
         public IEnumerable<ApplicationPermission> GetUserPermissions(string username)
         {
+            //用户权限集合
+            var userPermissions = new List<ApplicationPermission>();
             //取数据上下文
             var context = HttpContext.Current.GetOwinContext().Get<ApplicationDbContext>();
             //取用户
             var user = context.Users.Include(u => u.Roles)
                               .FirstOrDefault(t => t.UserName.ToUpper() == username.ToUpper());
-            //取角色权限集合
-            var rolePermissions = new List<ApplicationPermission>();
             //取用户所属角色的所有权限
             foreach (var item in user.Roles)
             {
-                var permissions = GetRolePermissions(item.RoleId);
-                rolePermissions.InsertRange(rolePermissions.Count, permissions);
+                //取角色权限
+                var rolePermissions = GetRolePermissions(item.RoleId);
+                //插入用户权限
+                userPermissions.InsertRange(userPermissions.Count, rolePermissions);
             }
-            return rolePermissions;
+            return userPermissions;
         }
 
     }

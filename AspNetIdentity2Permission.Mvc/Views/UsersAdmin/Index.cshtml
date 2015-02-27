@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.ApplicationUser>
+﻿@model IEnumerable<AspNetIdentity2Permission.Mvc.Models.EditUserViewModel>
 @{
     ViewBag.Title = "用户列表";
 }
@@ -10,7 +10,7 @@
     @Html.ActionLink("新建用户", "Create")
 </p>
 
-<table class="table table-hover">
+<table class="table table-hover table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.UserName)

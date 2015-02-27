@@ -10,7 +10,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
     /// <summary>
     /// 基础类
     /// </summary>
-    [IdentityAuthorize(Roles="Admin")]
+    [IdentityAuthorize(Roles="管理员")]
     public abstract class BaseController : Controller
     {
         public BaseController()

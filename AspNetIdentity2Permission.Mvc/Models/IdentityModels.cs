@@ -98,19 +98,19 @@ namespace AspNetIdentity2Permission.Mvc.Models
                 return true;
             }
             //而后比较Controller,Action,Description和Params
-            if (x.Controller != y.Controller || x.Action != y.Action || x.Description != y.Description )
+            if (x.Controller == y.Controller || x.Action == y.Action || x.Description == y.Description )
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
         public int GetHashCode(ApplicationPermission obj)
         {
-            var str = string.Format("{0}-{1}-{2}-{3}", obj.Controller, obj.Action, obj.Description, obj.Params);
+            var str = string.Format("{0}-{1}-{2}", obj.Controller, obj.Action, obj.Description);
             return str.GetHashCode();
         }
     }

@@ -1,7 +1,6 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
 using AspNetIdentity2Permission.Mvc.Services;
 using Microsoft.AspNet.Identity.Owin;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -57,14 +56,13 @@ namespace AspNetIdentity2Permission.Mvc
         private bool HasPermission(AuthorizationContext filterContext)
         {
             //取当前用户的权限            
-            var rolePermissions = GetCurrentUserPermissions(filterContext.HttpContext);
+            var rolePermissions = GetUserPermissions(filterContext.HttpContext);
             //待访问的Action的Permission
             var action = new ApplicationPermission
             {
                 Action = filterContext.ActionDescriptor.ActionName,
                 Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
-                Description = ActionPermissionService.GetDescription(filterContext.ActionDescriptor),
-                //Params = ActionPermissionService.FormatParams(filterContext.ActionDescriptor)
+                Description = ActionPermissionService.GetDescription(filterContext.ActionDescriptor)
             };
             //是否授权
             return rolePermissions.Contains(action, new ApplicationPermissionEqualityComparer());
@@ -75,26 +73,28 @@ namespace AspNetIdentity2Permission.Mvc
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private IEnumerable<ApplicationPermission> GetCurrentUserPermissions(HttpContextBase context)
+        private IEnumerable<ApplicationPermission> GetUserPermissions(HttpContextBase context)
         {
             //取登录名
             var username = context.User.Identity.Name;
             //构建缓存key
             var key = string.Format("UserPermissions_{0}", username);
             //从缓存中取权限
-            var permissions = context.Session[key] as IEnumerable<ApplicationPermission>;
+            var permissions = HttpContext.Current.Session[key]
+                                as IEnumerable<ApplicationPermission>;
             //若没有，则从db中取并写入缓存
             if (permissions == null)
             {
-                //取角色管理器
+                //取rolemanager
                 var roleManager = context.GetOwinContext().Get<ApplicationRoleManager>();
-                //取用户权限            
+                //取用户权限集合
                 permissions = roleManager.GetUserPermissions(username);
                 //写入缓存
-                context.Session[key] = permissions;
+                context.Session.Add(key, permissions);
             }
             return permissions;
         }
+
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +17,19 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         [Description("用户列表")]
         public async Task<ActionResult> Index()
         {
-            return View(await _userManager.Users.ToListAsync());
+            var users = await _userManager.Users.ToListAsync();
+            var views = new List<EditUserViewModel>();
+            foreach (var user in users)
+            {
+                var view = new EditUserViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email
+                };
+                views.Add(view);
+            }
+            return View(views);
         }
 
         //
@@ -32,8 +45,15 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             //按Id查找用户
             var user = await _userManager.FindByIdAsync(id);
+            var view = new EditUserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email
+            }; 
             ViewBag.RoleNames = await _userManager.GetRolesAsync(user.Id);
-            return View(user);
+
+            return View(view);
         }
 
         //
@@ -49,7 +69,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         //
         //异步写入用户创建
         // POST: /Users/Create
-        [Description("新建用户，提交")]
+        [Description("新建用户，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params  string[] selectedRoles)
@@ -122,10 +142,10 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         //
         //写入用户编辑
         // POST: /Users/Edit/5
-        [Description("编辑用户，提交")]
+        [Description("编辑用户，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserName,QQ,PhoneNumber,Email,Id")]EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "UserName,Email,Id")]EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -133,8 +153,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 if (user == null)
                 {
                     return HttpNotFound();
-                }
-                //user.UserName = editUser.UserName;
+                }                
                 user.Email = editUser.Email;
                 //更新用户信息
                 var result = await _userManager.UpdateAsync(user);
@@ -173,12 +192,18 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            var view = new EditUserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+            return View(view);
         }
         //
         //写入角色删除
         // POST: /Users/Delete/5
-        [Description("删除用户，提交")]
+        [Description("删除用户，保存")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)

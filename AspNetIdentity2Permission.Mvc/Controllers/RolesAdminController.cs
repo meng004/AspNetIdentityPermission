@@ -17,7 +17,19 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         [Description("角色列表")]
         public ActionResult Index()
         {
-            return View(_roleManager.Roles);//显示角色清单
+            var roles = _roleManager.Roles;
+            var views = new List<RoleViewModel>();
+            foreach (var role in roles)
+            {
+                var view = new RoleViewModel
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Description = role.Description
+                };
+                views.Add(view);
+            }
+            return View(views);//显示角色清单
         }
 
         //异步读取角色详情
@@ -41,7 +53,13 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             ViewBag.Users = users;
             ViewBag.UserCount = users.Count();
-            return View(role);
+            var view = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
+            };
+            return View(view);
         }
 
         //
@@ -55,7 +73,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
 
         //异步写入角色创建
         // POST: /Roles/Create
-        [Description("新建角色，提交")]
+        [Description("新建角色，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RoleViewModel roleViewModel)
@@ -92,13 +110,18 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            RoleViewModel roleModel = new RoleViewModel { Id = role.Id, Name = role.Name, Description = role.Description };
-            return View(roleModel);
+            var view = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
+            };
+            return View(view);
         }
 
         //异步写入角色编辑
         // POST: /Roles/Edit/5
-        [Description("编辑角色，提交")]
+        [Description("编辑角色，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Description,Name,Id")] RoleViewModel roleModel)
@@ -129,12 +152,18 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(role);
+            var view = new RoleViewModel
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
+            };
+            return View(view);
         }
 
         //异步写入角色删除
         // POST: /Roles/Delete/5
-        [Description("删除角色，提交")]
+        [Description("删除角色，保存")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)

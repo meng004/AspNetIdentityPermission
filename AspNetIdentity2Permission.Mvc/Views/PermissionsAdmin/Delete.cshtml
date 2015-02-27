@@ -1,4 +1,4 @@
-﻿@model AspNetIdentity2Permission.Mvc.Models.ApplicationPermission
+﻿@model AspNetIdentity2Permission.Mvc.Models.PermissionViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -25,14 +25,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Action)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Params)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Params)
         </dd>
 
         <dt>
