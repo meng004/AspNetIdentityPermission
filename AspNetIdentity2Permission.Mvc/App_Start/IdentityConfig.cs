@@ -89,26 +89,25 @@ namespace AspNetIdentity2Permission.Mvc
             const string name1 = "Admin";//用户名
             const string email1 = "admin@123.com";//邮箱
             const string password1 = "Admin@123456";//密码
-            const string roleName1 = "Admin";//用户要添加到的角色组
-            const string description1 = "管理员";
+            const string roleName1 = "管理员";//用户要添加到的角色组
             const string name2 = "user";//用户名
             const string email2 = "user@123.com";//邮箱
             const string password2 = "User@123456";//密码
-            const string roleName2 = "User";
-            const string description2 = "普通用户";
+            const string roleName2 = "普通用户";
+            
 
             //如果没有Admin用户组则创建该组
             var role1 = roleManager.FindByName(roleName1);
             if (role1 == null)
             {
-                role1 = new ApplicationRole() { Name = roleName1, Description = description1 };
+                role1 = new ApplicationRole() { Name = roleName1, Description = roleName1 };
                 var roleresult = roleManager.Create(role1);
             }
 
             var role2 = roleManager.FindByName(roleName2);
             if (role2 == null)
             {
-                role2 = new ApplicationRole() { Name = roleName2, Description = description2 };
+                role2 = new ApplicationRole() { Name = roleName2, Description = roleName2 };
                 var roleresult = roleManager.Create(role2);
             }
             //如果没有admin@123.com用户则创建该用户
