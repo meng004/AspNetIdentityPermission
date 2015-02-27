@@ -46,13 +46,16 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
 
         // GET: RolePermissions/Details/5
         [Description("角色-权限详情")]
-        public ActionResult Details(string roleId, string permissionId)
+        public async Task<ActionResult> Details(string roleId, string permissionId)
         {
             if (string.IsNullOrWhiteSpace(roleId) || string.IsNullOrWhiteSpace(permissionId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //取权限
             ApplicationPermission applicationPermission = _db.Permissions.Find(permissionId);
+            //取角色
+            var role = await _roleManager.FindByIdAsync(roleId);
             if (applicationPermission == null)
             {
                 return HttpNotFound();
@@ -63,7 +66,8 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 Action = applicationPermission.Action,
                 Controller = applicationPermission.Controller,
                 Description = applicationPermission.Description,
-                RoleID = roleId
+                RoleID = roleId,
+                RoleName = role.Name
             };
 
             return View(view);
@@ -134,13 +138,14 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
 
         // GET: RolePermissions/Delete/5
         [Description("删除角色-权限")]
-        public ActionResult Delete(string roleId, string permissionId)
+        public async Task<ActionResult> Delete(string roleId, string permissionId)
         {
             if (string.IsNullOrWhiteSpace(roleId) || string.IsNullOrWhiteSpace(permissionId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationPermission applicationPermission = _db.Permissions.Find(permissionId);
+            var role = await _roleManager.FindByIdAsync(roleId);
             if (applicationPermission == null)
             {
                 return HttpNotFound();
@@ -151,7 +156,8 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 Action = applicationPermission.Action,
                 Controller = applicationPermission.Controller,
                 Description = applicationPermission.Description,
-                RoleID = roleId
+                RoleID = roleId,
+                RoleName = role.Name
             };
 
             return View(view);
