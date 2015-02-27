@@ -12,13 +12,13 @@
     <p>
         @Html.ActionLink("添加", "Create", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue })
     </p>
-    <div class=" form-group">
-        @Html.Label("角色", new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownList("RoleID")
-            <input type="submit" value="确定" class="btn btn-default" />
-        </div>
+
+    @Html.Label("角色", new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.DropDownList("RoleID")
+        <input type="submit" value="确定" class="btn btn-default" />
     </div>
+
 }
 
 <table class="table table-hover table-striped">
@@ -38,22 +38,22 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>@Html.HiddenFor(modelItem => item.Id, new { @id = "permissionId" })</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Action)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Controller)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("详情", "Details", new { roleId = item.RoleId, permissionId = item.Id }) |
-                @Html.ActionLink("删除", "Delete", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue, permissionId = item.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>@Html.HiddenFor(modelItem => item.Id, new { @id = "permissionId" })</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Action)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Controller)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("详情", "Details", new { roleId = item.RoleId, permissionId = item.Id }) |
+            @Html.ActionLink("删除", "Delete", new { roleId = ((SelectList)ViewBag.RoleID).SelectedValue, permissionId = item.Id })
+        </td>
+    </tr>
     }
 
 
