@@ -49,6 +49,40 @@
         }
     </table>
 
-    @Ajax.Pager(Model, new PagerOptions { PageIndexParameterName = "index" }, new MvcAjaxOptions { UpdateTargetId = "views", EnablePartialLoading = true })
-</div>
+    @*@Html.Pager(
+            Model,
+            new PagerOptions
+            {
+                PageIndexParameterName = "index",
+                ContainerTagName = "ul",
+                PagerItemWrapperFormatString = "<li>{0}</li>",
+                CurrentPagerItemWrapperFormatString =
+                "<li class='active'>" +
+                "<a href='#'>{0}" +
+                "<span class='sr-only'>(current)" +
+                "</span></a></li>"
+            },
+            new { @class = "pagination" }
+        )*@
+
+    @Ajax.Pager(
+    Model,
+    new PagerOptions
+    {
+        PageIndexParameterName = "index",
+        ContainerTagName = "ul",
+        PagerItemWrapperFormatString = "<li>{0}</li>",
+        CurrentPagerItemWrapperFormatString =
+        "<li class='active'>" +
+        "<a href='#'>{0}" +
+        "<span class='sr-only'>(current)" +
+        "</span></a></li>"
+    },
+    new MvcAjaxOptions
+    {
+        UpdateTargetId = "views",
+        EnablePartialLoading = true
+    },
+    new { @class = "pagination" }
+)</div>
 @section Scripts{@{Html.RegisterMvcPagerScriptResource();}}
