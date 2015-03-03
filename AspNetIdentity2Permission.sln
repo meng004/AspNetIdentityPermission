@@ -6,10 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentity2Permission.Mvc", "AspNetIdentity2Permission.Mvc\AspNetIdentity2Permission.Mvc.csproj", "{5E5C1EF4-9352-4A87-83DA-BCD09DC5F271}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39936546-2285-4F3F-ADEA-CA0613FBA839}"
-	ProjectSection(SolutionItems) = preProject
-		C:\Users\lemon\Desktop\Identity角色权限管理.docx = C:\Users\lemon\Desktop\Identity角色权限管理.docx
-		C:\Program Files (x86)\Infragistics\2014.2\Ignite UI\MVC\MVC5\Bin\Infragistics.Web.Mvc.dll = C:\Program Files (x86)\Infragistics\2014.2\Ignite UI\MVC\MVC5\Bin\Infragistics.Web.Mvc.dll
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
