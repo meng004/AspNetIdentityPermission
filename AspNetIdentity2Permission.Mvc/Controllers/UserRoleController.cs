@@ -11,8 +11,8 @@ using Webdiyer.WebControls.Mvc;
 
 namespace AspNetIdentity2Permission.Mvc.Controllers
 {
-
-    public class UsersAdminController : BaseController
+    [Description("用户-角色维护")]
+    public class UserRoleController : BaseController
     {
 
         // GET: UsersAdmin

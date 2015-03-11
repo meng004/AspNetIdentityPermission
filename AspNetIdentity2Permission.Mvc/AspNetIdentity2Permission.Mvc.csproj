@@ -198,7 +198,7 @@
     <Compile Include="Controllers\PermissionsAdminController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
-    <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1165,11 +1165,11 @@
     <Content Include="Views\RolesAdmin\Edit.cshtml" />
     <Content Include="Views\RolesAdmin\Details.cshtml" />
     <Content Include="Views\RolesAdmin\Delete.cshtml" />
-    <Content Include="Views\UsersAdmin\Index.cshtml" />
-    <Content Include="Views\UsersAdmin\Create.cshtml" />
-    <Content Include="Views\UsersAdmin\Edit.cshtml" />
-    <Content Include="Views\UsersAdmin\Details.cshtml" />
-    <Content Include="Views\UsersAdmin\Delete.cshtml" />
+    <Content Include="Views\UserRole\Index.cshtml" />
+    <Content Include="Views\UserRole\Create.cshtml" />
+    <Content Include="Views\UserRole\Edit.cshtml" />
+    <Content Include="Views\UserRole\Details.cshtml" />
+    <Content Include="Views\UserRole\Delete.cshtml" />
     <Content Include="Views\PermissionsAdmin\Create.cshtml" />
     <Content Include="Views\PermissionsAdmin\Delete.cshtml" />
     <Content Include="Views\PermissionsAdmin\Details.cshtml" />

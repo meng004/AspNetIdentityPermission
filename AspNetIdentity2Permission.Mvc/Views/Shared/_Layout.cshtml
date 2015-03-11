@@ -30,10 +30,11 @@
                     @*通过身份验证并确认用户属于Admin角色显示管理菜单*@
                     @if (Request.IsAuthenticated && User.IsInRole("管理员"))
                     {
-                        <li>@Html.ActionLink("用户管理", "Index", "UsersAdmin")</li>
+                        <li>@Html.ActionLink("用户角色管理", "Index", "UserRole")</li>
                         <li>@Html.ActionLink("角色管理", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("权限管理", "Index", "PermissionsAdmin")</li>
                         <li>@Html.ActionLink("角色权限管理", "Index", "RolePermissions")</li>
+                        <li>@Html.ActionLink("部门管理","Index","Department")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
