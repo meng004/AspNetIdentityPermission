@@ -1,0 +1,70 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model IPagedList<AspNetIdentity2Permission.Mvc.Models.DepartmentViewModel>
+
+@section Styles{
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+}
+
+@{
+    ViewBag.Title = "办事机构管理";
+}
+
+<h2>办事机构</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+
+<div id="views">
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("删除", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    @Ajax.Pager(
+    Model,
+    new PagerOptions
+    {
+        PageIndexParameterName = "index",
+        ContainerTagName = "ul",
+        PagerItemWrapperFormatString = "<li>{0}</li>",
+        CurrentPagerItemWrapperFormatString =
+        "<li class='active'>" +
+        "<a href='#'>{0}" +
+        "<span class='sr-only'>(current)" +
+        "</span></a></li>"
+    },
+    new MvcAjaxOptions
+    {
+        UpdateTargetId = "views",
+        EnablePartialLoading = true
+    },
+    new { @class = "pagination" }
+)
+</div>
+@section Scripts{@{Html.RegisterMvcPagerScriptResource();}}

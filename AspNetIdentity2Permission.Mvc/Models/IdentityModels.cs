@@ -13,9 +13,12 @@ namespace AspNetIdentity2Permission.Mvc.Models
     // 可以通过向 ApplicationUser 类添加更多属性来为用户添加配置文件数据。若要了解详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=317594。
     public class ApplicationUser : IdentityUser
     {
-        public ApplicationUser() : base() { }
+        public ApplicationUser() : base() { this.Departments = new List<Department>(); }
         public ApplicationUser(string userName) : base(userName) { }
-
+        /// <summary>
+        /// 所属部门
+        /// </summary>
+        public virtual ICollection<Department> Departments { get; set; }
         /// <summary>
         /// 明文密码
         /// </summary>        
@@ -85,7 +88,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
         /// </summary>
         public ICollection<ApplicationRolePermission> Roles { get; set; }
 
-        
+
     }
 
     public class ApplicationPermissionEqualityComparer : IEqualityComparer<ApplicationPermission>
@@ -98,7 +101,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
                 return true;
             }
             //而后比较Controller,Action,Description和Params
-            if (x.Controller == y.Controller || x.Action == y.Action || x.Description == y.Description )
+            if (x.Controller == y.Controller || x.Action == y.Action || x.Description == y.Description)
             {
                 return true;
             }
@@ -119,6 +122,29 @@ namespace AspNetIdentity2Permission.Mvc.Models
     {
         public virtual string RoleId { get; set; }
         public virtual string PermissionId { get; set; }
+    }
+
+    /// <summary>
+    /// 机构
+    /// </summary>
+    public class Department
+    {
+        public Department()
+        {
+            this.Users = new List<ApplicationUser>();
+        }
+        /// <summary>
+        /// 机构编号
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 机构名称
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 下辖用户列表
+        /// </summary>
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -146,6 +172,10 @@ namespace AspNetIdentity2Permission.Mvc.Models
             EntityTypeConfiguration<ApplicationRole> configuration2 = modelBuilder.Entity<ApplicationRole>();
             configuration2.HasMany<ApplicationRolePermission>(r => r.Permissions).WithRequired().HasForeignKey(ur => ur.RoleId);
 
+            //配置Department与applicationUser的多对多关系
+            EntityTypeConfiguration<Department> configuration3 = modelBuilder.Entity<Department>();
+            configuration3.HasMany(d => d.Users).WithMany(u => u.Departments).Map(c => c.ToTable("UserDepartment").MapLeftKey("DepartmentID").MapRightKey("ApplicationUserID"));
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -156,6 +186,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
 
         public new IDbSet<ApplicationRole> Roles { get; set; }
         public virtual IDbSet<ApplicationPermission> Permissions { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
 
     }
 }

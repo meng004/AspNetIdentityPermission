@@ -22,6 +22,8 @@ namespace AspNetIdentity2Permission.Mvc
             CreateMap<ApplicationUser, EditUserViewModel>();
             CreateMap<EditUserViewModel, ApplicationUser>();
             CreateMap<RegisterViewModel, ApplicationUser>();
+            CreateMap<Department, DepartmentViewModel>();
+            CreateMap<DepartmentViewModel, Department>();
         }
     }
 

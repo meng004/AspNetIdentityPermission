@@ -86,4 +86,18 @@ namespace AspNetIdentity2Permission.Mvc.Models
             }
         }
     }
+
+    public class DepartmentViewModel
+    {
+        /// <summary>
+        /// 机构编号
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 机构名称
+        /// </summary>
+        [Required]
+        [Display(Name="机构名称")]
+        public string Name { get; set; }
+    }
 }

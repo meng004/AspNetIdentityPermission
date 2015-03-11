@@ -94,7 +94,8 @@ namespace AspNetIdentity2Permission.Mvc
             const string email2 = "user@123.com";//邮箱
             const string password2 = "User@123456";//密码
             const string roleName2 = "普通用户";
-            
+            var department1 = new Department { Name = "党政办" };//机构
+            var department2 = new Department { Name = "办事机构" };
 
             //如果没有Admin用户组则创建该组
             var role1 = roleManager.FindByName(roleName1);
@@ -149,6 +150,22 @@ namespace AspNetIdentity2Permission.Mvc
             {
                 var result = userManager.AddToRole(user2.Id, role2.Name);
             }
+            //添加机构
+            var depart1 = db.Departments.FirstOrDefault(t => t.Name == department1.Name);
+            if (depart1 == null)
+            {
+                db.Departments.Add(department1);
+            }
+            var depart2 = db.Departments.FirstOrDefault(t => t.Name == department2.Name);
+            if (depart2 == null)
+            {
+                db.Departments.Add(department2);
+            }
+            //用户添加到机构
+            department1.Users.Add(user1);
+            department2.Users.Add(user2);
+            //保存
+            db.SaveChanges();
         }
     }
 
