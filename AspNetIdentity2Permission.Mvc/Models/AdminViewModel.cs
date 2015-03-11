@@ -14,7 +14,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
         public string Description { get; set; }
     }
 
-    public class EditUserViewModel
+    public class EditUserRoleViewModel
     {
         public string Id { get; set; }
         [Display(Name = "用户名")]
@@ -27,6 +27,20 @@ namespace AspNetIdentity2Permission.Mvc.Models
         public string Email { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
+    }
+    public class EditUserDepartmentViewModel
+    {
+        public string Id { get; set; }
+        [Display(Name = "用户名")]
+        [Required]
+        public string UserName { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
+        [Display(Name = "电邮地址")]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        public IEnumerable<SelectListItem> DepartmentList { get; set; }
     }
 
     public class PermissionViewModel

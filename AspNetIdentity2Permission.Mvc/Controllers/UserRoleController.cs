@@ -1,5 +1,6 @@
 ﻿using AspNetIdentity2Permission.Mvc.Models;
 using AutoMapper;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
@@ -20,10 +21,10 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         public async Task<ActionResult> Index(int index = 1)
         {
             var users = await _userManager.Users.ToListAsync();
-            var views = new List<EditUserViewModel>();
+            var views = new List<EditUserRoleViewModel>();
             foreach (var user in users)
             {
-                var view = Mapper.Map<EditUserViewModel>(user);
+                var view = Mapper.Map<EditUserRoleViewModel>(user);
                 views.Add(view);
             }
             return View(views.ToPagedList(index, 10));
@@ -32,7 +33,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         //
         //异步读取用户详情
         //GET: /Users/Details/5
-        [Description("用户详情")]
+        [Description("用户-角色详情")]
         public async Task<ActionResult> Details(string id)
         {
             //用户为空时返回400错误
@@ -42,7 +43,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             }
             //按Id查找用户
             var user = await _userManager.FindByIdAsync(id);
-            var view = Mapper.Map<EditUserViewModel>(user);
+            var view = Mapper.Map<EditUserRoleViewModel>(user);
             ViewBag.RoleNames = await _userManager.GetRolesAsync(user.Id);
 
             return View(view);
@@ -100,7 +101,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         //
         //读取用户编辑
         // GET: /Users/Edit/1
-        [Description("编辑用户")]
+        [Description("编辑用户-角色")]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -113,22 +114,22 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                 return HttpNotFound();
             }
             var userRoles = await _userManager.GetRolesAsync(user.Id);
-            var view = Mapper.Map<EditUserViewModel>(user);
+            var view = Mapper.Map<EditUserRoleViewModel>(user);
             view.RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
-                    Value = x.Name
+                    Value = x.Id
                 });
             return View(view);
         }
         //
         //写入用户编辑
         // POST: /Users/Edit/5
-        [Description("编辑用户，保存")]
+        [Description("编辑用户-角色，保存")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserName,Email,Id")]EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "UserName,Email,Id")]EditUserRoleViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -147,14 +148,18 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
                     return View();
                 }
                 //更新角色
-                var userRoles = await _userManager.GetRolesAsync(user.Id);
+                //删除现有角色
+                var userRoles = user.Roles.ToList();
+                userRoles.ForEach(t => _db.Set<IdentityUserRole>().Remove(t));
+
+                //添加所选角色
                 selectedRole = selectedRole ?? new string[] { };
-                result = await _userManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
-                if (!result.Succeeded)
+                selectedRole.Each(roleId =>
                 {
-                    ModelState.AddModelError("", result.Errors.First());
-                    return View();
-                }
+                    var userRole = new IdentityUserRole { RoleId = roleId, UserId = user.Id };
+                    _db.Set<IdentityUserRole>().Add(userRole);
+                });
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "操作失败。");
@@ -176,7 +181,7 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            var view = Mapper.Map<EditUserViewModel>(user);
+            var view = Mapper.Map<EditUserRoleViewModel>(user);
             return View(view);
         }
         //

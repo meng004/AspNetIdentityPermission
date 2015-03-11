@@ -13,12 +13,12 @@ namespace AspNetIdentity2Permission.Mvc.Models
     // 可以通过向 ApplicationUser 类添加更多属性来为用户添加配置文件数据。若要了解详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=317594。
     public class ApplicationUser : IdentityUser
     {
-        public ApplicationUser() : base() { this.Departments = new List<Department>(); }
+        public ApplicationUser() : base() { this.Departments = new List<UserDepartment>(); }
         public ApplicationUser(string userName) : base(userName) { }
         /// <summary>
         /// 所属部门
         /// </summary>
-        public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<UserDepartment> Departments { get; set; }
         /// <summary>
         /// 明文密码
         /// </summary>        
@@ -131,7 +131,7 @@ namespace AspNetIdentity2Permission.Mvc.Models
     {
         public Department()
         {
-            this.Users = new List<ApplicationUser>();
+            this.Users = new List<UserDepartment>();
         }
         /// <summary>
         /// 机构编号
@@ -144,7 +144,13 @@ namespace AspNetIdentity2Permission.Mvc.Models
         /// <summary>
         /// 下辖用户列表
         /// </summary>
-        public virtual ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<UserDepartment> Users { get; set; }
+    }
+
+    public class UserDepartment
+    {
+        public int DepartmentId { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -163,20 +169,27 @@ namespace AspNetIdentity2Permission.Mvc.Models
             {
                 throw new ArgumentNullException("modelBuilder");
             }
+            
+            base.OnModelCreating(modelBuilder);
+
             //配置permission与rolePermission的1对多关系
             EntityTypeConfiguration<ApplicationPermission> configuration = modelBuilder.Entity<ApplicationPermission>().ToTable("ApplicationPermissions");
-            configuration.HasMany<ApplicationRolePermission>(u => u.Roles).WithRequired().HasForeignKey(ur => ur.PermissionId);
+            configuration.HasMany<ApplicationRolePermission>(u => u.Roles).WithRequired().HasForeignKey(k => k.PermissionId);
             //配置role与persmission的映射表RolePermission的键
-            modelBuilder.Entity<ApplicationRolePermission>().HasKey(r => new { PermissionId = r.PermissionId, RoleId = r.RoleId }).ToTable("ApplicationRolePermissions");
+            modelBuilder.Entity<ApplicationRolePermission>().HasKey(r => new { PermissionId = r.PermissionId, RoleId = r.RoleId }).ToTable("RolePermissions");
             //配置role与RolePermission的1对多关系
             EntityTypeConfiguration<ApplicationRole> configuration2 = modelBuilder.Entity<ApplicationRole>();
-            configuration2.HasMany<ApplicationRolePermission>(r => r.Permissions).WithRequired().HasForeignKey(ur => ur.RoleId);
+            configuration2.HasMany<ApplicationRolePermission>(r => r.Permissions).WithRequired().HasForeignKey(k => k.RoleId);
 
             //配置Department与applicationUser的多对多关系
-            EntityTypeConfiguration<Department> configuration3 = modelBuilder.Entity<Department>();
-            configuration3.HasMany(d => d.Users).WithMany(u => u.Departments).Map(c => c.ToTable("UserDepartment").MapLeftKey("DepartmentID").MapRightKey("ApplicationUserID"));
+            modelBuilder.Entity<UserDepartment>().HasKey(u => new { u.ApplicationUserId, u.DepartmentId }).ToTable("UserDepartment").Property(t=>t.ApplicationUserId).HasColumnName("UserId");
 
-            base.OnModelCreating(modelBuilder);
+            EntityTypeConfiguration<Department> configuration3 = modelBuilder.Entity<Department>();
+            configuration3.HasMany(d => d.Users).WithRequired().HasForeignKey(k => k.DepartmentId);
+
+            EntityTypeConfiguration<ApplicationUser> configuration4 = modelBuilder.Entity<ApplicationUser>();
+            configuration4.HasMany(d => d.Departments).WithOptional().HasForeignKey(k => k.ApplicationUserId);
+            
         }
 
         public static ApplicationDbContext Create()

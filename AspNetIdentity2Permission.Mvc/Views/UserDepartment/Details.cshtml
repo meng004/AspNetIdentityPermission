@@ -1,4 +1,4 @@
-﻿@model AspNetIdentity2Permission.Mvc.Models.EditUserRoleViewModel
+﻿@model AspNetIdentity2Permission.Mvc.Models.EditUserDepartmentViewModel
 @{
     ViewBag.Title = "用户详情";
 }
@@ -23,14 +23,14 @@
         </dd>
     </dl>
 </div>
-<h4>该用户所在的角色：</h4>
-@if (ViewBag.RoleNames.Count == 0)
+<h4>该用户所在的部门：</h4>
+@if (ViewBag.DepartmentNames.Count == 0)
 {
     <hr />
     <p>这个用户没有设置角色</p>
 }
 <table class="table">
-    @foreach (var item in ViewBag.RoleNames)
+    @foreach (var item in ViewBag.DepartmentNames)
     {
         <tr>
             <td>
@@ -40,6 +40,6 @@
     }
 </table>
 <p>
-    @Html.ActionLink("编辑用户", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"}) |
-    @Html.ActionLink("返回用户列表", "Index")
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Id }, new { @class="btn btn-warning"}) |
+    @Html.ActionLink("返回列表", "Index")
 </p>

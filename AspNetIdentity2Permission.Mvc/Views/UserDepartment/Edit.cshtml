@@ -1,4 +1,4 @@
-﻿@model AspNetIdentity2Permission.Mvc.Models.EditUserRoleViewModel
+﻿@model AspNetIdentity2Permission.Mvc.Models.EditUserDepartmentViewModel
 @{
     ViewBag.Title = "编辑用户";
 }
@@ -22,16 +22,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
             <div class=" col-md-10">
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.Email)
             </div>
         </div>
         <div class=" form-group">
-            @Html.Label("角色组", new { @class = "control-label col-md-2" })
+            @Html.Label("所属部门", new { @class = "control-label col-md-2" })
             <span class=" col-md-10">
-                @foreach (var item in Model.RolesList)
+                @foreach (var item in Model.DepartmentList)
                 {
-                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                    <input type="checkbox" name="selectedDepartments" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
                     @Html.Label(item.Text, new { @class = "control-label" })
                 }
             </span>

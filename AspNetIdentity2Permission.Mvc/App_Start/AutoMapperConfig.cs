@@ -19,8 +19,9 @@ namespace AspNetIdentity2Permission.Mvc
                                 sour.MapFrom(s => s.Id ?? System.Guid.NewGuid().ToString());
                             });
 
-            CreateMap<ApplicationUser, EditUserViewModel>();
-            CreateMap<EditUserViewModel, ApplicationUser>();
+            CreateMap<ApplicationUser, EditUserRoleViewModel>();
+            CreateMap<EditUserRoleViewModel, ApplicationUser>();
+            CreateMap<ApplicationUser, EditUserDepartmentViewModel>();
             CreateMap<RegisterViewModel, ApplicationUser>();
             CreateMap<Department, DepartmentViewModel>();
             CreateMap<DepartmentViewModel, Department>();

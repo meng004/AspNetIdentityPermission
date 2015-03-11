@@ -161,11 +161,14 @@ namespace AspNetIdentity2Permission.Mvc
             {
                 db.Departments.Add(department2);
             }
-            //用户添加到机构
-            department1.Users.Add(user1);
-            department2.Users.Add(user2);
             //保存
             db.SaveChanges();
+            
+            //用户添加到机构
+            db.Set<UserDepartment>().Add(new UserDepartment { DepartmentId = department1.Id, ApplicationUserId = user1.Id });
+            db.Set<UserDepartment>().Add(new UserDepartment { DepartmentId = department2.Id, ApplicationUserId = user2.Id });
+            db.SaveChanges();
+
         }
     }
 

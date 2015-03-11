@@ -7,7 +7,7 @@
     <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")    
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("Styles", required: false)
 </head>
@@ -30,11 +30,12 @@
                     @*通过身份验证并确认用户属于Admin角色显示管理菜单*@
                     @if (Request.IsAuthenticated && User.IsInRole("管理员"))
                     {
-                        <li>@Html.ActionLink("用户角色管理", "Index", "UserRole")</li>
+                        <li>@Html.ActionLink("用户管理", "Index", "UserRole")</li>
+                        <li>@Html.ActionLink("部门管理", "Index", "Department")</li>
+                        <li>@Html.ActionLink("用户部门管理", "Index", "UserDepartment")</li>
                         <li>@Html.ActionLink("角色管理", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("权限管理", "Index", "PermissionsAdmin")</li>
                         <li>@Html.ActionLink("角色权限管理", "Index", "RolePermissions")</li>
-                        <li>@Html.ActionLink("部门管理","Index","Department")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -48,7 +49,6 @@
             <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
         </footer>
     </div>
-
 
     @RenderSection("scripts", required: false)
 </body>
