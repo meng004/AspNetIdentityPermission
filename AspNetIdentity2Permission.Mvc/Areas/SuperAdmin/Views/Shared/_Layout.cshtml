@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("前台首页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.Label("管理后台", new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("主页", "Index", "Home")</li>
+                        <li>@Html.ActionLink("关于", "About", "Home")</li>
+                        <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
+                        @*通过身份验证并确认用户属于Admin角色显示管理菜单
+                        @if (Request.IsAuthenticated && User.IsInRole("管理员"))
+                        {
+                            <li>@Html.ActionLink("用户管理", "Index", "UserRole")</li>
+                            <li>@Html.ActionLink("部门管理", "Index", "Department")</li>
+                            <li>@Html.ActionLink("用户部门管理", "Index", "UserDepartment")</li>
+                            <li>@Html.ActionLink("角色管理", "Index", "RolesAdmin")</li>
+                            <li>@Html.ActionLink("权限管理", "Index", "PermissionsAdmin")</li>
+                            <li>@Html.ActionLink("角色权限管理", "Index", "RolePermissions")</li>
+                        }
+                    </ul>*@
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        @if (Request.IsAuthenticated && User.IsInRole("管理员"))
+                        {
+                            <li class="nav-header">用户管理</li>
+                            <li>@Html.ActionLink("用户-角色管理", "Index", "UserRole")</li>
+                            <li>@Html.ActionLink("部门管理", "Index", "Department")</li>
+                            <li>@Html.ActionLink("用户-部门管理", "Index", "UserDepartment")</li>
+                            <li class="nav-header">权限管理</li>
+                            <li>@Html.ActionLink("角色管理", "Index", "RolesAdmin")</li>
+                            <li>@Html.ActionLink("权限管理", "Index", "PermissionsAdmin")</li>
+                            <li>@Html.ActionLink("角色-权限管理", "Index", "RolePermissions")</li>
+                        }
+                        else
+                        {
+                            <li>你没有授权</li>
+                        }
+                    </ul>
+                </div><!--/.well -->
+            </div><!--/span-->
+            <div class="span9 container body-content">
+                @RenderBody()
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 南华大学，  技术支持：0734-8281721</p>
+
+        </footer>
+    </div>
+
+
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

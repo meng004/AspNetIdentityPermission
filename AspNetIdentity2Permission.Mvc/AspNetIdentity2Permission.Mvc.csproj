@@ -190,16 +190,18 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\SuperAdmin\SuperAdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PermissionsAdminController.cs" />
-    <Compile Include="Controllers\RolePermissionsController.cs" />
-    <Compile Include="Controllers\RolesAdminController.cs" />
-    <Compile Include="Controllers\UserDepartmentController.cs" />
-    <Compile Include="Controllers\UserRoleController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\PermissionsAdminController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\RolePermissionsController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\RolesAdminController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\UserDepartmentController.cs" />
+    <Compile Include="Areas\SuperAdmin\Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +214,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1107,6 +1110,10 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Doc\Identity角色权限管理.pdf" />
+    <Content Include="Areas\SuperAdmin\Views\web.config" />
+    <Content Include="Areas\SuperAdmin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
@@ -1161,36 +1168,37 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\RolesAdmin\Index.cshtml" />
-    <Content Include="Views\RolesAdmin\Create.cshtml" />
-    <Content Include="Views\RolesAdmin\Edit.cshtml" />
-    <Content Include="Views\RolesAdmin\Details.cshtml" />
-    <Content Include="Views\RolesAdmin\Delete.cshtml" />
-    <Content Include="Views\UserRole\Index.cshtml" />
-    <Content Include="Views\UserRole\Create.cshtml" />
-    <Content Include="Views\UserRole\Edit.cshtml" />
-    <Content Include="Views\UserRole\Details.cshtml" />
-    <Content Include="Views\UserRole\Delete.cshtml" />
-    <Content Include="Views\PermissionsAdmin\Create.cshtml" />
-    <Content Include="Views\PermissionsAdmin\Delete.cshtml" />
-    <Content Include="Views\PermissionsAdmin\Details.cshtml" />
-    <Content Include="Views\PermissionsAdmin\Edit.cshtml" />
-    <Content Include="Views\PermissionsAdmin\Index.cshtml" />
-    <Content Include="Views\RolePermissions\Index.cshtml" />
-    <Content Include="Views\RolePermissions\Create.cshtml" />
-    <Content Include="Views\RolePermissions\Delete.cshtml" />
-    <Content Include="Views\RolePermissions\Details.cshtml" />
-    <Content Include="Views\Department\Create.cshtml" />
-    <Content Include="Views\Department\Delete.cshtml" />
-    <Content Include="Views\Department\Details.cshtml" />
-    <Content Include="Views\Department\Edit.cshtml" />
-    <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\UserDepartment\Details.cshtml" />
-    <Content Include="Views\UserDepartment\Edit.cshtml" />
-    <Content Include="Views\UserDepartment\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolesAdmin\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolesAdmin\Create.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolesAdmin\Edit.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolesAdmin\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolesAdmin\Delete.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserRole\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserRole\Create.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserRole\Edit.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserRole\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserRole\Delete.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\PermissionsAdmin\Create.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\PermissionsAdmin\Delete.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\PermissionsAdmin\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\PermissionsAdmin\Edit.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\PermissionsAdmin\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolePermissions\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolePermissions\Create.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolePermissions\Delete.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\RolePermissions\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Department\Create.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Department\Delete.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Department\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Department\Edit.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\Department\Index.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserDepartment\Details.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserDepartment\Edit.cshtml" />
+    <Content Include="Areas\SuperAdmin\Views\UserDepartment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\SuperAdmin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

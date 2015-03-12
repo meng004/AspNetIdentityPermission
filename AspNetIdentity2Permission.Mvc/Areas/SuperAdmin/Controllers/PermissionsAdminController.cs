@@ -1,4 +1,5 @@
-﻿using AspNetIdentity2Permission.Mvc.Models;
+﻿using AspNetIdentity2Permission.Mvc.Controllers;
+using AspNetIdentity2Permission.Mvc.Models;
 using AutoMapper;
 using Infragistics.Web.Mvc;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Webdiyer.WebControls.Mvc;
 
-namespace AspNetIdentity2Permission.Mvc.Controllers
+namespace AspNetIdentity2Permission.Mvc.Areas.SuperAdmin.Controllers
 {
     public class PermissionsAdminController : BaseController
     {

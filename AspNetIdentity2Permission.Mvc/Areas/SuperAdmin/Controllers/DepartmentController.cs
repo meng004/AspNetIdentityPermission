@@ -7,8 +7,9 @@ using System.Web.Mvc;
 using Webdiyer.WebControls.Mvc;
 using AutoMapper;
 using System.Collections.Generic;
+using AspNetIdentity2Permission.Mvc.Controllers;
 
-namespace AspNetIdentity2Permission.Mvc.Controllers
+namespace AspNetIdentity2Permission.Mvc.Areas.SuperAdmin.Controllers
 {
     public class DepartmentController : BaseController
     {

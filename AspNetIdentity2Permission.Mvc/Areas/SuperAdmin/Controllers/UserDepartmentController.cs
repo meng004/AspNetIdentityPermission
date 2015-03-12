@@ -1,4 +1,5 @@
-﻿using AspNetIdentity2Permission.Mvc.Models;
+﻿using AspNetIdentity2Permission.Mvc.Controllers;
+using AspNetIdentity2Permission.Mvc.Models;
 using AutoMapper;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Webdiyer.WebControls.Mvc;
 
-namespace AspNetIdentity2Permission.Mvc.Controllers
+namespace AspNetIdentity2Permission.Mvc.Areas.SuperAdmin.Controllers
 {
     [Description("用户-部门维护")]
     public class UserDepartmentController : BaseController

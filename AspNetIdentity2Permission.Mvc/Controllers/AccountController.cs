@@ -394,9 +394,10 @@ namespace AspNetIdentity2Permission.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut();
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             //移除缓存
             base.HttpContext.Session.RemoveAll();
+            
             return RedirectToAction("Index", "Home");
         }
 

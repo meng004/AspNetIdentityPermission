@@ -21,23 +21,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("管理后台", "Index", "Home", new { area = "SuperAdmin" }, new { @class = "navbar-brand navbar-right" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                    <li>@Html.ActionLink("关于", "About", "Home")</li>
-                    <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-                    @*通过身份验证并确认用户属于Admin角色显示管理菜单*@
-                    @if (Request.IsAuthenticated && User.IsInRole("管理员"))
-                    {
-                        <li>@Html.ActionLink("用户管理", "Index", "UserRole")</li>
-                        <li>@Html.ActionLink("部门管理", "Index", "Department")</li>
-                        <li>@Html.ActionLink("用户部门管理", "Index", "UserDepartment")</li>
-                        <li>@Html.ActionLink("角色管理", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("权限管理", "Index", "PermissionsAdmin")</li>
-                        <li>@Html.ActionLink("角色权限管理", "Index", "RolePermissions")</li>
-                    }
-                </ul>
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

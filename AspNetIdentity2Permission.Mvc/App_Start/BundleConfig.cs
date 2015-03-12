@@ -25,8 +25,10 @@ namespace AspNetIdentity2Permission.Mvc
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-responsive.css"));//新增，用于管理后台菜单
 
+            
             //jquery-ui
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                  "~/Scripts/jquery-ui-{version}.js"
